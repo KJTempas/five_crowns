@@ -1,0 +1,14 @@
+<h2>Five Crowns Player List</h2>
+
+{% for player in players %}
+
+<div>
+    {{ player.name }}
+    {{ player.lowest_score }}
+</div>
+
+{% empty %}
+
+<p>You have no players on the scoreboard</p>
+
+{% endfor %}

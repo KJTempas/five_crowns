@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from five_crowns_scorecard  import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('five_crowns_scorecard.urls'))
+    path('', include('five_crowns_scorecard.urls')),
+    path('score/<int:game_pk>, <int:player_pk>/add_score', views.add_score, name='add_score'),
 ]

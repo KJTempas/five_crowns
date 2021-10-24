@@ -1,14 +1,31 @@
+{% extends 'five_crowns_scorecard/base.html' %}
+{% block content %}
+
 <h2>Five Crowns Player List</h2>
 
-{% for player in players %}
 
+{% if players %}
 <div>
-    {{ player.name }}
-    {{ player.lowest_score }}
+    <table>
+        <tr>
+            <th>Player</th>
+            <th>Average Score</th>
+            <th>Minimum Score</th>
+        </tr>
+        
+        {% for player in players %}
+        <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.min_score }}</td>
+            <td>{{ player.average_points}}</td>
+         </tr>
+         {% endfor %}
+    </table>
 </div>
+{% else %}
 
-{% empty %}
+    <p>You have no players on the scoreboard</p>
+{% endif %}
 
-<p>You have no players on the scoreboard</p>
 
-{% endfor %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'five_crowns_scorecard/base.html' %}
+{% block content %}
+
+<h2>Games</h2>
+{% if games %}
+<div>
+    <table>
+        <tr>
+           
+            <th>Player Name</th>
+            <th>Points</th>
+        </tr>
+    {% for game in games %}
+        {% for player in game.players.all %}
+        <tr>
+            <td>{{ game.player.name }}</td>
+            <td>{{ game.player.points }}</td>
+            
+         </tr>
+            
+        <!-- <div>
+            <span id="game-{{ game.pk }}" class="game-details">
+                <a href="{% url 'add_score' game_pk=game.pk %}"> {{ game.game_date }}</a>
+            </span>
+        </div> -->
+        {% endfor %}
+    {% endfor %}
+    </table>
+{% else %}
+    <p> No games have been registered</p>
+{% endif %}
+
+</div>
+{% endblock %}
+
+

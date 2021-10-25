@@ -17,7 +17,7 @@ class Game(models.Model):
     game_date= models.DateField()#(auto_now=False, auto_now_add=True)
     #players = models.ManyToManyField(Player, through='Score')
     players = models.ManyToManyField(Player, through='Score', related_name='games' )
-    #game_points = models.ManyToManyField(Player)
+    #what if two games/day with same player;  need datetime not date
     class Meta:
         ordering = ['-game_date'] #the '-' makes it desc order; remove for asc order
    # https://docs.djangoproject.com/en/3.2/topics/db/models/#many-to-many-relationships    

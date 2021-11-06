@@ -6,6 +6,7 @@
         <title> Five Crowns Leaderboard</title>
 
         <!-- style sheets info here -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     </head>
 
     <body>
@@ -19,6 +20,10 @@
 
         <div>
             <p>A Five Crowns Leaderboard built by K.Tempas with Django </p>
+            <a class = "nav-link" href="{% url 'player_list' %}">Players</a>
+            <a class = "nav-link" href="{% url 'game_list' %}">Games</a>
+            <a class = "nav-link" href="{% url 'add_player' %}">Add a Player</a>
+        
         </div>
     </body>
 </html>

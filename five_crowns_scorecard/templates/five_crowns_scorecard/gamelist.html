@@ -1,36 +1,31 @@
 {% extends 'five_crowns_scorecard/base.html' %}
 {% block content %}
 
-<h2>Games</h2>
-{% if games %}
-<div>
-    <table>
-        <tr>
-           
-            <th>Player Name</th>
-            <th>Points</th>
-        </tr>
-    {% for game in games %}
-        {% for player in game.players.all %}
-        <tr>
-            <td>{{ game.player.name }}</td>
-            <td>{{ game.player.points }}</td>
-            
-         </tr>
-            
-        <!-- <div>
-            <span id="game-{{ game.pk }}" class="game-details">
-                <a href="{% url 'add_score' game_pk=game.pk %}"> {{ game.game_date }}</a>
-            </span>
-        </div> -->
-        {% endfor %}
-    {% endfor %}
-    </table>
-{% else %}
-    <p> No games have been registered</p>
-{% endif %}
+<h2>Add New Game</h2>
 
+<!--<div>
+    <form method="POST" action="{% url 'add_game' %}">
+        {% csrf_token %}
+        {{ new_game_form }}
+        <button id="add-new-game" type="submit">Add New Game</button>
+    </form>
+</div> -->
+
+<h3> List of Games - Click on game date to enter scores </h3>
+<div>
+    {% for game in games %}
+    <span id="game-date-{{ game.pk }}" class="game-date">
+        <!--using the a href makes game dates into links-->
+        <a href="{% url 'game_detail' game_pk=game.pk %}">{{ game.game_date }}<br></a>
+    </span>
 </div>
+
+        
+{% empty %}
+    <p> No games have been registered</p>
+{% endfor %}
+
+
 {% endblock %}
 
 

@@ -3,10 +3,13 @@
 
 <h2>Input a Game here</h2>
 <h4> Players and final game scores </h4>
+{{ game.game_date}}
 
 <form method="POST" action="{% url 'add_score' %}" >
 {% csrf_token %}
-{{ new_score_form }}
+{% for field in new_score_form %}
+    {{ field }}
+{% endfor %}
 <button id="add-new-score" type="submit">Add New Game Scores</button>
 </form>
 

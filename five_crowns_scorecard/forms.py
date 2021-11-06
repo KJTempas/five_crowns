@@ -8,7 +8,12 @@ class NewPlayerForm(forms.ModelForm):
         exclude = ['points'] #points not needed on new form as is default 0
 
 
+class NewGameForm(forms.ModelForm):
+    class Meta:
+        model = Game
+        fields = ['game_date', 'players']
+
 class NewScoreForm(forms.ModelForm):
     class Meta:
         model = Score
-        fields = ('player', 'game', 'points')
+        fields = [ 'points'] #maybe need 'player' also?

@@ -22,12 +22,11 @@ class Game(models.Model):
         ordering = ['-game_date'] #the '-' makes it desc order; remove for asc order
    # https://docs.djangoproject.com/en/3.2/topics/db/models/#many-to-many-relationships    
 
-#note - if I leave out the Score class, when add a game, can select players
 
 class Score(models.Model):
     game = models.ForeignKey(Game, related_name= 'scores', on_delete=models.SET_NULL, null=True)#on_delete=models.CASCADE) #need to review meaning of this
     player = models.ForeignKey(Player, related_name='scores', on_delete=models.SET_NULL, null=True, blank=True)#on_delete=models.CASCADE)
-    points = models.IntegerField()#blank = False) #required field
+    points = models.IntegerField(default =0)#blank = False) #required field
     
     class Meta:
         unique_together = [['game', 'player', 'points']]

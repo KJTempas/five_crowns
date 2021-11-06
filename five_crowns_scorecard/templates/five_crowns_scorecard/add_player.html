@@ -1,6 +1,8 @@
 {% extends 'five_crowns_scorecard/base.html' %}
 {% block content %}
 
+
+
 <h3> Add a Player </h3>
 
 <form method="POST" action="{% url 'add_player' %}">
@@ -8,5 +10,6 @@
     {{ new_player_form }}
     <button id="add-new-player" type="submit">Add New Player</button>
 </form>
+
 
 {% endblock %}

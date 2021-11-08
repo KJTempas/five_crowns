@@ -6,15 +6,14 @@
     {{ game.game_date}}
 
    <form method="POST" action="{% url 'add_score' game.pk %}" >
-    {% csrf_token %}
-    {% for player in game.players.all %}
-    {% for field in form %}
-        {{ player.name }}
-        {{ field }} <br> <br>
-    {% endfor %}
-    {% endfor %}
-    <!--{{ form.as_p }}-->
-    <button id="add-score" type="submit">Add New Game Scores</button>
+        {% csrf_token %}
+        {% for player in game.players.all %}
+           {% for field in new_score_form %} 
+                {{ player.name }}
+                {{ field }} <br> <br>
+          {% endfor %} 
+        {% endfor %}
+        <button id="add-score" type="submit">Add New Game Scores</button>
     </form> 
 
 {% endblock %}

@@ -16,4 +16,4 @@ class NewGameForm(forms.ModelForm):
 class NewScoreForm(forms.ModelForm):
     class Meta:
         model = Score
-        fields = [ 'points'] #maybe need 'player' also?
+        fields = [ 'points' ] #maybe need 'player' also?

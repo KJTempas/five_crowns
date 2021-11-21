@@ -1,0 +1,29 @@
+[
+    {
+        "model": "five_crowns_scorecard.player",
+        "pk": 1,
+        "fields":
+        {
+            "name": "Marie Curie",
+            "points": 0
+        }
+    },
+    {
+        "model": "five_crowns_scorecard.player",
+        "pk": 2,
+        "fields":
+        {
+            "name": "Katherine Johnson",
+            "points": 0  
+        }
+    },
+    {
+    "model": "five_crowns_scorecard.player",
+        "pk": 3,
+        "fields":
+        {
+            "name": "Rosalind Franklin",
+            "points": 0
+        }
+    }
+]

@@ -16,8 +16,9 @@
     {% for game in games %}
     <span id="game-date-{{ game.pk }}" class="game-date">
         <!--using the a href makes game dates into links-->
-        <a href="{% url 'game_detail' game_pk=game.pk %}">{{ game.game_date }}<br></a>
-    </span>
+        <a href="{% url 'game_detail' game_pk=game.pk %}">{{ game.game_date }}<br></a> 
+    
+        <!--<a href="{% url 'add_score' game_pk=game.pk %}">{{ game.game_date }}<br></a></span> -->
 </div>
 
         

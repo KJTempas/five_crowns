@@ -21,8 +21,12 @@ def add_game(request):
         #create a form instance with the submitted data
         new_game_form = NewGameForm(request.POST)
         if new_game_form.is_valid():
+
+            for player in request.POST.getlist('players'):
+                form = NewGameForm({'player': player}, instance=Game())
+                form.save
             new_game_form.save()
-            game = Game.objects.last() #retrieve last saved game  ' why?
+           
             return redirect('game_list')
         else: #create an empty form
             return render(request, 'five_crowns_scorecard/add_game.html', {'new_game_form': new_game_form})
@@ -37,22 +41,45 @@ def player_list(request):
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()
-    print(games.count())
+    #print(games.count())
     return render(request, 'five_crowns_scorecard/gamelist.html', { 'games': games })
     # new_game_form = NewGameForm()
     # return render(request, 'five_crowns_scorecard/gamelist.html', { 'games' : games , 'new_game_form': new_game_form})
 
+def game_detail(request, game_pk):
+    game = get_object_or_404(Game, pk=game_pk)
+    players = game.players
+    
+    if request.method == 'POST':
+       # https://stackoverflow.com/questions/13563475/how-to-loop-through-form-fields-and-store-them-all-in-the-database
+        #in Score table, game_id and player_id are added when game is saved
+       
+        game_players = Score.objects.all().filter(game= game)
+        formScores = request.POST.getlist('points')
+        i=0
+        while i<len(game_players):
+            #make the first game players points equal to the first score on the points list
+            game_players[i].points = formScores[i]
+            game_players[i].save()
+            i = i+1
+    
+        return redirect(('player_list'))
 
+    else: #GET game details
+        #TODO fix so shows game score on GET
+        new_score_form = NewScoreForm(instance=game)
+        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game, 'new_score_form': new_score_form})
+
+#TODO WHY IS THE NEEDED - WHERE IS IT CALLED?
 def add_score(request, game_pk):
-    #print(game_pk) #works - prints 80
-    #game = get_object_or_404(Game, pk = game_pk) #was this 
+
     game = get_object_or_404(pk = game.pk)
-    #print(game.game_date) #not working
     players = game.players
     if request.method == 'POST':
             #create a form instance with the submitted data
         form = NewScoreForm(request.POST)
         if form.is_valid():
+            
             form.save()
             return redirect('player_list')
 
@@ -60,24 +87,10 @@ def add_score(request, game_pk):
             return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game} )
     #if not a post, probably a GET, so make blank form
     form = NewScoreForm
+    print('you are here- GET request for add_score')
     return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game, 'players': players})
 
 
-def game_detail(request, game_pk):
-    game = get_object_or_404(Game, pk=game_pk)
-    players = game.players
-    print(game.pk)
-    if request.method == 'POST':
-        form = NewScoreForm(request.POST)#, instance=game)
-        if form.is_valid():
-            form.save()
-        else:
-            messages.error(request, form.errors) #temp error message
-
-        return redirect('game_detail', game_pk=game_pk) #redirects are GET; this is calling this method again
-    else: #GET game details
-        new_score_form = NewScoreForm(instance=game)
-        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game, 'new_score_form': new_score_form})
 
 
         

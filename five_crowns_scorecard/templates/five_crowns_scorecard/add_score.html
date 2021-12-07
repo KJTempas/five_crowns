@@ -1,16 +1,19 @@
 {% extends 'five_crowns_scorecard/base.html' %}
 {% block content %}
-
+<!--
 <h2>Input a Game here</h2>
 <h4> Players and final game scores </h4>
 {{ game.game_date}}
 
-<form method="POST" action="{% url 'add_score' %}" >
+<form method="POST" action="{% url 'add_score' game_pk=game.pk %}" >
 {% csrf_token %}
-{% for field in new_score_form %}
-    {{ field }}
+{% for player in game.players.all %}
+    {% for field in new_score_form %}
+    {{ player.name }}
+        {{ field }}
+{% endfor %}
 {% endfor %}
 <button id="add-new-score" type="submit">Add New Game Scores</button>
-</form>
+</form>  -->
 
 {% endblock %}

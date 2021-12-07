@@ -9,17 +9,18 @@
     <button id="add-new-game" type="submit">Add New Game</button>
 </form>
 
-<!--shold this go here or in separate template add_score.html?-->
-{% if game %}
-<h3> Add Scores for Game </h3>
+<!--should this go here or in separate template add_score.html?-->
 
-    <form method="POST" action="{% url 'add_score' %}" >
-        {% csrf_token %}
-        {% for field in new_score_form %}
-            {{ field }}
-        {% endfor %}
-        <button id="add-new-score" type="submit">Add New Game Scores</button>
-    </form>
-{% endif %}
+<!-- {% if game %}
+    <h3> Add Scores for Game </h3>
+
+        <form method="POST" action="{% url 'add_score' %}" >
+            {% csrf_token %}
+            {% for field in new_score_form %}
+                {{ field }}
+            {% endfor %}
+            <button id="add-new-score" type="submit">Add New Game Scores</button>
+        </form> 
+    {% endif %} -->
 
 {% endblock %}

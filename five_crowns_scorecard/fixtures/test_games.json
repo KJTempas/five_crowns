@@ -1,0 +1,29 @@
+[
+    {
+        "model": "five_crowns_scorecard.game",
+        "pk": 1,
+        "fields":
+        {
+            "game_date": "2021-11-1",
+            "players": ["Marie Curie", "Katherine Johnson"]
+        }
+    },
+    {
+        "model": "five_crowns_scorecard.game",
+        "pk": 2,
+        "fields":
+        {
+            "name": "2021-11-2",
+            "players": ["Katherine Johnson", "Rosalind Franklin"] 
+        }
+    },
+    {
+    "model": "five_crowns_scorecard.game",
+        "pk": 3,
+        "fields":
+        {
+            "name": "2021-11-3",
+            "players": ["Marie Curie", "Rosalind Franklin"]
+        }
+    }
+]

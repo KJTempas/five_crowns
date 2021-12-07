@@ -6,10 +6,10 @@ class Player(models.Model):
     name = models.CharField(max_length=50)
     #points = models.IntegerField(default=0) not needed?
     #https://stackoverflow.com/questions/2689664/get-average-from-set-of-objects-in-django
-    # def average(self):
-    #     #get all scores for this player
-    #     p = Score.objects.get(player = player.id)
-    #     return p.rating_set.aggregate(Avg('points')).values()[0]
+    def average(self):
+        #get all scores for this player
+        p = Score.objects.get(player = player.id)
+        return p.rating_set.aggregate(Avg('points')).values()[0]
     #average, min and max are calculated values - use Aggregation
     #store points as a JSON field
     

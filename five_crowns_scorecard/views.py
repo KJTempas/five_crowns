@@ -3,6 +3,7 @@ from django.urls import reverse
 from .models import Player, Game, Score
 from .forms import NewScoreForm, NewPlayerForm, NewGameForm
 from django.contrib import messages
+from django.db.models import Sum, Avg, Max, Min 
 
 # Create your views here.
 def add_player(request):
@@ -36,8 +37,19 @@ def add_game(request):
 
 def player_list(request):
     players = Player.objects.all()
-    return render(request, 'five_crowns_scorecard/playerlist.html', { 'players': players })
-
+    for player in players:
+        scores = Score.objects.filter(player = player).values('points') #yields a queryset
+        if scores:
+            avg_score = Score.objects.filter(player = player).aggregate(Avg('points')) #sums each users points
+            print(avg_score)
+            min_score = Score.objects.filter(player = player).aggregate(Min('points'))
+            print(min_score)
+            max_score = Score.objects.filter(player = player).aggregate(Max('points'))
+            print(max_score)
+          
+        
+    return render(request, 'five_crowns_scorecard/playerlist.html', { 'players': players ,'min_score': min_score, 'average_score': avg_score, 'max_score': max_score })
+#https://stackoverflow.com/questions/8616343/django-calculate-the-sum-of-the-column-values-through-query
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()
@@ -62,15 +74,14 @@ def game_detail(request, game_pk):
             game_players[i].points = formScores[i]
             game_players[i].save()
             i = i+1
-    
         return redirect(('player_list'))
 
     else: #GET game details
         #TODO fix so shows game score on GET
         new_score_form = NewScoreForm(instance=game)
-        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game, 'new_score_form': new_score_form})
+        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game , 'new_score_form': new_score_form})
 
-#TODO WHY IS THE NEEDED - WHERE IS IT CALLED?
+#TODO WHY IS THIS NEEDED - WHERE IS IT CALLED?
 def add_score(request, game_pk):
 
     game = get_object_or_404(pk = game.pk)
@@ -85,7 +96,7 @@ def add_score(request, game_pk):
 
         else: #create an empty form
             return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game} )
-    #if not a post, probably a GET, so make blank form
+    #if not a post,  a GET, so make blank form
     form = NewScoreForm
     print('you are here- GET request for add_score')
     return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game, 'players': players})

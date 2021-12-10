@@ -1,20 +1,34 @@
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Min, Max
 
 # Create your models here.
 class Player(models.Model):
     name = models.CharField(max_length=50)
+
     #points = models.IntegerField(default=0) not needed?
     #https://stackoverflow.com/questions/2689664/get-average-from-set-of-objects-in-django
-    def average(self):
-        #get all scores for this player
-        p = Score.objects.get(player = player.id)
-        return p.rating_set.aggregate(Avg('points')).values()[0]
+    #?? put these here or in player_list method
+    # @property
+    # def avg_score(self):
+    # #     #get all scores for this player
+    # #     # p = Score.objects.get(player = player.id)
+    # #     # return p.rating_set.aggregate(Avg('points')).values()[0]
+    # #     #should this be in class Score?
+    #     return Score.objects.filter(player = player).aggregate(Avg('points')) 
+    
+    # @property
+    # def max_score(self):
+    #     return Score.objects.filter(player = player).aggregate(Max('points'))
+
+    # @property
+    # def min_score(self):
+    #     return Score.objects.filter(player = player).aggregate(Min('points'))
+         
     #average, min and max are calculated values - use Aggregation
-    #store points as a JSON field
+
     
     def __str__(self):
-        return self.name
+        return self.name# , self.average, self.min_score, self.max_score
 
 class Game(models.Model):
     game_date= models.DateField()#(auto_now=False, auto_now_add=True)
@@ -30,6 +44,19 @@ class Score(models.Model):
     player = models.ForeignKey(Player, related_name='scores', on_delete=models.SET_NULL, null=True, blank=True)#on_delete=models.CASCADE)
     points = models.IntegerField(default=0 ) #required field
     
+    # @property
+    # def avg_score(player):
+    # #     #get all scores for this player
+    # #     # p = Score.objects.get(player = player.id)
+    # #     # return p.rating_set.aggregate(Avg('points')).values()[0]
+    # #     #should this be in class Score?
+    #     return Score.objects.filter(player = player).aggregate(Avg('points')) 
+    
+    # @property
+    # def min_score(self):
+    #     return Score.objects.filter(player = player).aggregate(Min('points'))
+         
+
     class Meta:
         unique_together = [['game', 'player', 'points']]
 # helpful doc - https://www.revsys.com/tidbits/tips-using-djangos-manytomanyfield/

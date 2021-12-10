@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import Player, Game, Score
 from .forms import NewScoreForm, NewPlayerForm, NewGameForm
 from django.contrib import messages
-from django.db.models import Sum, Avg, Max, Min 
+from django.db.models import Avg, Max, Min 
 
 # Create your views here.
 def add_player(request):
@@ -37,19 +37,26 @@ def add_game(request):
 
 def player_list(request):
     players = Player.objects.all()
+    
     for player in players:
+        print(player.name)
         scores = Score.objects.filter(player = player).values('points') #yields a queryset
         if scores:
-            avg_score = Score.objects.filter(player = player).aggregate(Avg('points')) #sums each users points
+            print(scores)
+            avg_score = Score.objects.filter(player = player).aggregate(avg_score=Avg('points')) 
             print(avg_score)
-            min_score = Score.objects.filter(player = player).aggregate(Min('points'))
+            min_score = Score.objects.filter(player = player).aggregate(min_score=Min('points'))
             print(min_score)
-            max_score = Score.objects.filter(player = player).aggregate(Max('points'))
+            print(type(min_score)) # a dictionary
+            max_score = Score.objects.filter(player = player).aggregate(max_score=Max('points'))
             print(max_score)
-          
-        
-    return render(request, 'five_crowns_scorecard/playerlist.html', { 'players': players ,'min_score': min_score, 'average_score': avg_score, 'max_score': max_score })
-#https://stackoverflow.com/questions/8616343/django-calculate-the-sum-of-the-column-values-through-query
+            #simpler combined aggregate but not working
+            #Score.objects.filter(player = player).aggregate(avg_score=Avg('points'), min_score =Min('points'), max_score=Max('points'))   
+
+    #     #   #TODO get these to display in template correctly
+     # min, max and avg could be calculated in model  - not working that way   
+    return render(request, 'five_crowns_scorecard/playerlist.html', { 'players': players,'min_score': min_score, 'avg_score': avg_score, 'max_score': max_score })
+
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()

@@ -4,6 +4,7 @@ from .models import Player, Game, Score
 from .forms import NewScoreForm, NewPlayerForm, NewGameForm
 from django.contrib import messages
 from django.db.models import Avg, Max, Min 
+from django.forms import model_to_dict
 
 # Create your views here.
 def add_player(request):
@@ -36,27 +37,19 @@ def add_game(request):
 
 
 def player_list(request):
-    players = Player.objects.all()
-    
-    for player in players:
-        print(player.name)
-        scores = Score.objects.filter(player = player).values('points') #yields a queryset
-        if scores:
-            print(scores)
-            avg_score = Score.objects.filter(player = player).aggregate(avg_score=Avg('points')) 
-            print(avg_score)
-            min_score = Score.objects.filter(player = player).aggregate(min_score=Min('points'))
-            print(min_score)
-            print(type(min_score)) # a dictionary
-            max_score = Score.objects.filter(player = player).aggregate(max_score=Max('points'))
-            print(max_score)
-            #simpler combined aggregate but not working
-            #Score.objects.filter(player = player).aggregate(avg_score=Avg('points'), min_score =Min('points'), max_score=Max('points'))   
+    players_query = Player.objects.all() #yields a queryset
+    # for player in players_query:
+    #     player_dict =model_to_dict(player)
+    #     print(player_dict)
+    context = {
+        "players": players_query
+    }
 
-    #     #   #TODO get these to display in template correctly
-     # min, max and avg could be calculated in model  - not working that way   
-    return render(request, 'five_crowns_scorecard/playerlist.html', { 'players': players,'min_score': min_score, 'avg_score': avg_score, 'max_score': max_score })
 
+       #TODO get these to display in template correctly
+     
+    return render(request, 'five_crowns_scorecard/playerlist.html',  context)
+ 
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()

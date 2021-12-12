@@ -18,9 +18,9 @@
         {% for player in players %}
         <tr>
             <td>{{ player.name }}</td>
-            <td> {{ player.min_score }} </td>
-            <td>{{ player.avg_score }}</td>
-            <td>{{ player.max_score }}</td>
+            <td> {{ player.min_score.points__min }} </td>
+            <td>{{ player.avg_score.points__avg }}</td>
+            <td>{{ player.max_score.points__max }}</td>
          </tr>
          {% endfor %}
     </table>

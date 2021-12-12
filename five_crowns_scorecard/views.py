@@ -37,18 +37,14 @@ def add_game(request):
 
 
 def player_list(request):
-    players_query = Player.objects.all() #yields a queryset
-    # for player in players_query:
-    #     player_dict =model_to_dict(player)
-    #     print(player_dict)
-    context = {
-        "players": players_query
-    }
-
-
+    players = Player.objects.all() #yields a queryset
+    for player in players:
+        #print(player)
+        player = model_to_dict(player)
+        print(player)
        #TODO get these to display in template correctly
      
-    return render(request, 'five_crowns_scorecard/playerlist.html',  context)
+    return render(request, 'five_crowns_scorecard/playerlist.html',  {'players': players})
  
 
 def game_list(request):

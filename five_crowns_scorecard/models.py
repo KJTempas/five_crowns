@@ -19,10 +19,13 @@ class Player(models.Model):
     @property
     def min_score(self):
         return Score.objects.filter(player = self).aggregate(Min('points'))
-
+    #note - when accessing these @ property values in a template, do as follows 
+    # {{ player.min_score.points__min}}
+    #  when you call an aggregate fx, it returns a mapping of the result from the column name
+    # to value; need to pull the value out of the hash this way(thanks to Joshua Shanks)
     
     def __str__(self):
-        return self.name, self.avg_score, self.min_score, self.max_score
+        return self.name
 
 class Game(models.Model):
     game_date= models.DateField()#(auto_now=False, auto_now_add=True)

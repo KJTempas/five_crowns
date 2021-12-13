@@ -3,8 +3,7 @@ from django.urls import reverse
 from .models import Player, Game, Score
 from .forms import NewScoreForm, NewPlayerForm, NewGameForm
 from django.contrib import messages
-from django.db.models import Avg, Max, Min 
-from django.forms import model_to_dict
+
 
 # Create your views here.
 def add_player(request):
@@ -38,18 +37,12 @@ def add_game(request):
 
 def player_list(request):
     players = Player.objects.all() #yields a queryset
-    for player in players:
-        #print(player)
-        player = model_to_dict(player)
-        print(player)
-       #TODO get these to display in template correctly
-     
+       
     return render(request, 'five_crowns_scorecard/playerlist.html',  {'players': players})
  
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()
-    #print(games.count())
     return render(request, 'five_crowns_scorecard/gamelist.html', { 'games': games })
     # new_game_form = NewGameForm()
     # return render(request, 'five_crowns_scorecard/gamelist.html', { 'games' : games , 'new_game_form': new_game_form})

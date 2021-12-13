@@ -4,8 +4,7 @@ from django.db.models import Avg, Min, Max
 # Create your models here.
 class Player(models.Model):
     name = models.CharField(max_length=50)
-
-    #points = models.IntegerField(default=0) not needed?
+    
     #https://stackoverflow.com/questions/2689664/get-average-from-set-of-objects-in-django
    
     @property
@@ -24,6 +23,10 @@ class Player(models.Model):
     #  when you call an aggregate fx, it returns a mapping of the result from the column name
     # to value; need to pull the value out of the hash this way(thanks to Joshua Shanks)
     
+    @property
+    def num_of_games(self):
+        return Score.objects.filter(player = self).count()
+
     def __str__(self):
         return self.name
 

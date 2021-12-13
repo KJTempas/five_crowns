@@ -6,20 +6,21 @@
 
 {% if players %}
 <div>
-    <table>
+    <table><!-- TODO test out django tables; or ways to set column width -->
         <tr>
             <th>Player</th>
+            <th>Number of Games Played</th>
             <th>Minimum Score</th>
             <th>Average Score</th>
             <th>Maximum Score </th>
-            <!--later add # of games played -->
         </tr>
         
         {% for player in players %}
         <tr>
             <td>{{ player.name }}</td>
+            <td>{{ player.num_of_games }}</td>
             <td> {{ player.min_score.points__min }} </td>
-            <td>{{ player.avg_score.points__avg }}</td>
+            <td>{{ player.avg_score.points__avg|floatformat:2 }}</td>
             <td>{{ player.max_score.points__max }}</td>
          </tr>
          {% endfor %}

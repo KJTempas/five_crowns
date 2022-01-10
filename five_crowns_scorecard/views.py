@@ -5,7 +5,6 @@ from .forms import NewScoreForm, NewPlayerForm, NewGameForm
 from django.contrib import messages
 
 
-# Create your views here.
 def add_player(request):
     if request.method == 'POST':
         new_player_form = NewPlayerForm(request.POST)
@@ -16,6 +15,7 @@ def add_player(request):
             return render(request, 'five_crowns_scorecard/add_player.html', {'new_player_form': new_player_form})
     new_player_form = NewPlayerForm
     return render(request, 'five_crowns_scorecard/add_player.html', {'new_player_form': new_player_form})
+
 
 def add_game(request):
     if request.method == 'POST':
@@ -37,20 +37,17 @@ def add_game(request):
 
 def player_list(request):
     players = Player.objects.all() #yields a queryset
-       
     return render(request, 'five_crowns_scorecard/playerlist.html',  {'players': players})
  
 
 def game_list(request):
     games = Game.objects.all()#.order_by('game_date')#filter().values()
     return render(request, 'five_crowns_scorecard/gamelist.html', { 'games': games })
-    # new_game_form = NewGameForm()
-    # return render(request, 'five_crowns_scorecard/gamelist.html', { 'games' : games , 'new_game_form': new_game_form})
+    
 
 def game_detail(request, game_pk):
     game = get_object_or_404(Game, pk=game_pk)
-    players = game.players
-    
+    players = game.players #players for this game
     if request.method == 'POST':
        # https://stackoverflow.com/questions/13563475/how-to-loop-through-form-fields-and-store-them-all-in-the-database
         #in Score table, game_id and player_id are added when game is saved
@@ -64,31 +61,11 @@ def game_detail(request, game_pk):
             game_players[i].save()
             i = i+1
         return redirect(('player_list'))
-
     else: #GET game details
         #TODO fix so shows game score on GET
-        new_score_form = NewScoreForm(instance=game)
-        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game , 'new_score_form': new_score_form})
+        new_score_form = NewScoreForm()
+        return render(request, 'five_crowns_scorecard/game_detail.html', {'game': game , 'new_score_form': new_score_form})#, 'players': players})
 
-#TODO WHY IS THIS NEEDED - WHERE IS IT CALLED?
-def add_score(request, game_pk):
-
-    game = get_object_or_404(pk = game.pk)
-    players = game.players
-    if request.method == 'POST':
-            #create a form instance with the submitted data
-        form = NewScoreForm(request.POST)
-        if form.is_valid():
-            
-            form.save()
-            return redirect('player_list')
-
-        else: #create an empty form
-            return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game} )
-    #if not a post,  a GET, so make blank form
-    form = NewScoreForm
-    print('you are here- GET request for add_score')
-    return render(request, 'five_crowns_scorecard/add_score.html', {'form': form, 'game': game, 'players': players})
 
 
 

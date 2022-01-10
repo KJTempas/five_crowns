@@ -17,11 +17,11 @@
         
         {% for player in players %}
         <tr>
-            <td>{{ player.name }}</td>
-            <td>{{ player.num_of_games }}</td>
-            <td> {{ player.min_score.points__min }} </td>
-            <td>{{ player.avg_score.points__avg|floatformat:2 }}</td>
-            <td>{{ player.max_score.points__max }}</td>
+            <td class="name">{{ player.name }}</td>
+            <td class="scores">{{ player.num_of_games }}</td>
+            <td class="scores">{{ player.min_score.points__min }}</td>
+            <td class="scores">{{ player.avg_score.points__avg|floatformat:2 }}</td>
+            <td class="scores">{{ player.max_score.points__max }}</td>
          </tr>
          {% endfor %}
     </table>

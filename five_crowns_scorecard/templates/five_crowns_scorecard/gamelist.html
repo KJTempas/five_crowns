@@ -1,24 +1,14 @@
 {% extends 'five_crowns_scorecard/base.html' %}
 {% block content %}
 
-<h2>Add New Game - will add form later</h2>
- 
-<!--<div>
-    <form method="POST" action="{% url 'add_game' %}">
-        {% csrf_token %}
-        {{ new_game_form }}
-        <button id="add-new-game" type="submit">Add New Game</button>
-    </form>
-</div> -->
 
-<h3> List of Games - Click on game date to enter scores </h3>
+<h3> List of Games - Click on new game date in blue to enter scores </h3>
 <div>
     {% for game in games %}
     <span id="game-date-{{ game.pk }}" class="game-date">
         <!--using the a href makes game dates into links-->
         <a href="{% url 'game_detail' game_pk=game.pk %}">{{ game.game_date }}<br></a> 
     
-        <!--<a href="{% url 'add_score' game_pk=game.pk %}">{{ game.game_date }}<br></a></span> -->
 </div>
 
         

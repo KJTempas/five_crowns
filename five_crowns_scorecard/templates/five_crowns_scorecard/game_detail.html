@@ -5,7 +5,6 @@
     <h4> Players and final game scores </h4>
     {{ game.game_date}}
 
-    <!--<form method="POST" action="{% url 'add_score' game.pk %}" > -->
     <form method="POST" action="{% url 'game_detail' game_pk=game.pk %}" >
       
     {% csrf_token %}
@@ -15,7 +14,7 @@
                 {{ field }} <br> <br>
           {% endfor %} 
         {% endfor %}
-        <button id="add-score" type="submit">Add New Game Scores</button>
+        <button  type="submit">Add New Game Scores</button>
     </form> 
 
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'five_crowns_scorecard/base.html' %}
 {% block content %}
 
-<h2>Five Crowns Player List</h2>
+<h2 id="score_head">Five Crowns Player List</h2>
 
 
 {% if players %}
@@ -9,7 +9,7 @@
     <table><!-- TODO test out django tables; or ways to set column width -->
         <tr>
             <th>Player</th>
-            <th>Number of Games Played</th>
+            <th># of Games Played</th>
             <th>Minimum Score</th>
             <th>Average Score</th>
             <th>Maximum Score </th>

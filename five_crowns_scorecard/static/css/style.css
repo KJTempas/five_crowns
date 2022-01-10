@@ -1,3 +1,22 @@
 /* Base styles */
 
-/* see wishlist */
+th {
+    text-transform: uppercase;
+    border-bottom: 2px solid #111111;
+    border-top: 1px solid #999;
+}
+tr {
+    text-align: center;
+}
+
+#score_head{
+    text-align: center;
+    color: blue;
+}
+
+
+body {
+   
+    background-image: linear-gradient(lightblue, cornflowerblue) ;
+}
+
